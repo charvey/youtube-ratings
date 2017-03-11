@@ -4,12 +4,14 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
     <UserSecretsId>a7921700-eb66-48f9-a5a5-cd67cdfab319</UserSecretsId>
+    <RootNamespace>YoutubeRatings.Web</RootNamespace>
   </PropertyGroup>
   
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>  
   <ItemGroup>
+    <Folder Include="Views\Trending\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>

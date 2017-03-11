@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using YoutubeRatings.Data;
 
-namespace Web
+namespace YoutubeRatings.Web.Controllers
 {
     [Route("api/[controller]")]
     public class VideosController : Controller

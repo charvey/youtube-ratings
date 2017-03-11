@@ -9,7 +9,7 @@ using YoutubeRatings.Data;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Web
+namespace YoutubeRatings.Web.Controllers
 {
     public class HomeController : Controller
     {
@@ -32,7 +32,6 @@ namespace Web
 
             try
             {
-                var api = JobStorage.Current.GetMonitoringApi();
                 var stat = viewCounts.Get().GroupBy(vvc => vvc.VideoId).OrderByDescending(ViewRate.CalculateGrowthPerHour);
                 output.AppendLine();
                 foreach (var x in stat.Take((Console.WindowHeight - 11) / 2))

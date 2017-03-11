@@ -1,0 +1,34 @@
+@using YoutubeRatings.Core
+@using YoutubeRatings.Web.Controllers
+@model IEnumerable<Trending>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<table>
+    <tr>
+        <th>Video</th>
+        <th>First</th>
+        <th>Last</th>
+        <th>Min</th>
+        <th>Max</th>
+        <th>Growth</th>
+    </tr>
+    @foreach (var x in Model)
+    {
+        var first = x.ViewCounts.First().ViewCount;
+        var min = x.ViewCounts.Min(vc => vc.ViewCount);
+        var max = x.ViewCounts.Max(vc => vc.ViewCount);
+        var last = x.ViewCounts.Last().ViewCount;
+        <tr>
+            <td><a href="http://youtube.com/watch?v=@x.VideoId">@x.Title</a></td>
+            <td>@first</td>
+            <td>@last</td>
+            <td>@min</td>
+            <td>@max</td>
+            <td>@($"{ViewRate.CalculateGrowthPerHour(x.ViewCounts),8:P}") per hour</td>
+        </tr>
+    }
+</table>

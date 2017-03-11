@@ -17,15 +17,11 @@ namespace Web
                 .UseApplicationInsights()
                 .Build();
 
-
-            GlobalConfiguration.Configuration.UseMemoryStorage();
-
             UsersProcess.Start();
             VideosProcess.Start();
             ViewsTracker.Start();
 
-            using (var server = new BackgroundJobServer(new BackgroundJobServerOptions { WorkerCount = 20 }))
-                host.Run();
+            host.Run();
         }
     }
 }

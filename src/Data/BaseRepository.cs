@@ -7,7 +7,7 @@ namespace YoutubeRatings.Data
     {
         protected static DbConnection SimpleDbConnection()
         {
-            return new SqliteConnection("Data Source=Database.sqlite3");
+            return new SqliteConnection(@"Data Source=c:\data\youtube-ratings.sqlite3");
         }
     }
 }

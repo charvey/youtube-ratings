@@ -3,6 +3,7 @@ using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml;
 
@@ -20,7 +21,7 @@ namespace YoutubeRatings.Core
 	{
         private static YouTubeService service = new YouTubeService(new BaseClientService.Initializer
         {
-            ApiKey = "",
+            ApiKey = File.ReadAllText(@"C:\data\youtube-ratings.apikey"),
             ApplicationName = "youtube-rating"
         });
 

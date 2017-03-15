@@ -32,12 +32,10 @@ namespace YoutubeRatings.Web.Controllers
 
             try
             {
-                var stat = viewCounts.Get().GroupBy(vvc => vvc.VideoId).OrderByDescending(ViewRate.CalculateGrowthPerHour);
                 output.AppendLine();
-                foreach (var x in stat.Take((Console.WindowHeight - 11) / 2))
+                foreach (var x in new TrendingVideos().Get().Take(10))
                 {
-                    var diff = x.Max(y => y.ViewCount) - x.Min(y => y.ViewCount);
-                    output.AppendLine($"{x.Key}\t{x.Count(),5}\t{x.Last().ViewCount,10:F0}\t{1.0 * diff / x.Last().ViewCount,8:P}\t{ViewRate.CalculateViewsPerMinute(x),10:F3}\t{ViewRate.CalculateGrowthPerHour(x),8:P}");
+                    output.AppendLine($"{x.Video.VideoId}\t{x.ViewCounts.Count(),5}\t{x.Last,10:F0}\t{x.Captured,8:P}\t{x.ViewsPerMinute,10:F3}\t{x.GrowthPerHour,8:P}");
                 }
             }
             catch

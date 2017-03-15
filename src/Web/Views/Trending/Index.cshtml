@@ -1,34 +1,32 @@
 @using YoutubeRatings.Core
 @using YoutubeRatings.Web.Controllers
-@model IEnumerable<Trending>
+@model IEnumerable<TrendingVideo>
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Trending</h2>
 
 <table>
     <tr>
         <th>Video</th>
+        <th>Capture Count</th>
         <th>First</th>
         <th>Last</th>
-        <th>Min</th>
-        <th>Max</th>
-        <th>Growth</th>
+        <th>Capture Coverage</th>
+        <th>Views / min</th>
+        <th>Growth / hr</th>
     </tr>
     @foreach (var x in Model)
     {
-        var first = x.ViewCounts.First().ViewCount;
-        var min = x.ViewCounts.Min(vc => vc.ViewCount);
-        var max = x.ViewCounts.Max(vc => vc.ViewCount);
-        var last = x.ViewCounts.Last().ViewCount;
         <tr>
-            <td><a href="http://youtube.com/watch?v=@x.VideoId">@x.Title</a></td>
-            <td>@first</td>
-            <td>@last</td>
-            <td>@min</td>
-            <td>@max</td>
-            <td>@($"{ViewRate.CalculateGrowthPerHour(x.ViewCounts),8:P}") per hour</td>
+            <td><a href="http://youtube.com/watch?v=@x.Video.VideoId">@x.Video.Title</a></td>
+            <td>@x.ViewCounts.Count()</td>
+            <td>@x.First</td>
+            <td>@x.Last</td>
+            <td>@x.Captured.ToString("P")</td>
+            <td>@x.ViewsPerMinute.ToString("F3")</td>
+            <td>@($"{x.GrowthPerHour,8:P}")</td>
         </tr>
     }
 </table>

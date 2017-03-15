@@ -31,21 +31,18 @@ namespace YoutubeRatings.Worker
             DateTime goal = DateTime.Now;
 
             var recent = viewCounts.GetById(videoId).OrderByDescending(x => x.DateTime).ToList();
-            if (!recent.Any())
-            {
-                goal = DateTime.Now;
-            }
-            else if (recent.Count() < 5)
+            if (recent.Count() < 5)
             {
                 goal = DateTime.Now;
             }
             else
             {
-                var diff = (recent.First().ViewCount - recent.ElementAt(4).ViewCount);
+                var newViews = recent.First().ViewCount - recent.ElementAt(4).ViewCount;
                 var timeDiff = recent.First().DateTime - recent.ElementAt(4).DateTime;
-                var avg = (recent.First().ViewCount + recent.ElementAt(4).ViewCount) / 2.0;
-                var n = diff / (0.0005 * avg);
-                var timeInterval = timeDiff.TotalMinutes / n;
+                var averageViews = recent.Take(5).Average(vvc => vvc.ViewCount);
+                var averageGrowth = newViews / averageViews;
+                const double desiredPrecision = 0.0005;
+                var timeInterval =  desiredPrecision* (timeDiff.TotalMinutes / averageGrowth);
 
                 if (double.IsInfinity(timeInterval))
                     goal = DateTime.MaxValue;
@@ -60,9 +57,14 @@ namespace YoutubeRatings.Worker
                     var newGoal = recent.First().DateTime + TimeSpan.FromMinutes(5);
                     if (newGoal < goal) goal = newGoal;
                 }
-                else if (DateTime.Now - recent.Last().DateTime < TimeSpan.FromHours(12))
+                else if (DateTime.Now - recent.Last().DateTime < TimeSpan.FromHours(8))
                 {
                     var newGoal = recent.First().DateTime + TimeSpan.FromMinutes(15);
+                    if (newGoal < goal) goal = newGoal;
+                }
+                else if (DateTime.Now - recent.Last().DateTime < TimeSpan.FromHours(16))
+                {
+                    var newGoal = recent.First().DateTime + TimeSpan.FromMinutes(30);
                     if (newGoal < goal) goal = newGoal;
                 }
                 else if (DateTime.Now - recent.Last().DateTime < TimeSpan.FromDays(1))

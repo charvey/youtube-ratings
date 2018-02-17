@@ -17,7 +17,7 @@ namespace Web
                 .UseApplicationInsights()
                 .Build();
 
-            UsersProcess.Start();
+            ChannelsProcess.Start();
             VideosProcess.Start();
             ViewsTracker.Start();
 

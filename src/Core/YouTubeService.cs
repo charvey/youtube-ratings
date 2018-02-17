@@ -49,16 +49,18 @@ namespace YoutubeRatings.Core
 			return videoListResponse.Items.Single().Statistics.ViewCount.Value;
 		}
 
-		public static string GetUploadsPlaylistId(string username)
+		public static string GetChannelIdForUsername(string username)
 		{
-			var channel = service.Channels.List("contentDetails");
+			var channel = service.Channels.List("id");
 			channel.ForUsername = username;
-			return channel.Execute().Items.Single().ContentDetails.RelatedPlaylists.Uploads;
+			return channel.Execute().Items.Single().Id;
 		}
 
-		public static IList<string> PlaylistItems(string username)
+		public static string GetUploadsPlaylistId(string channelId)
 		{
-            return PlaylistItemsByPlaylistId(GetUploadsPlaylistId(username)).ToList();
+			var channel = service.Channels.List("contentDetails");
+			channel.Id = channelId;
+			return channel.Execute().Items.Single().ContentDetails.RelatedPlaylists.Uploads;
 		}
 
 		public static IEnumerable<string> PlaylistItemsByPlaylistId(string playlistId)

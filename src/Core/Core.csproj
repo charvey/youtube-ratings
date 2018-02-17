@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>YoutubeRatings.Core</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.21.0.760" />
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.32.2.1131" />
   </ItemGroup>
 
   <ItemGroup>
